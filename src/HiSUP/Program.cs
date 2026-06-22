@@ -23,15 +23,22 @@ builder.Services.AddRazorPages();
 var app = builder.Build();
 
 // Seed roles on startup
-using (var scope = app.Services.CreateScope())
+try
 {
-    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-    string[] roleNames = { "Admin", "Student", "Faculty", "Finance" };
-    foreach (var roleName in roleNames)
+    using (var scope = app.Services.CreateScope())
     {
-        if (!await roleManager.RoleExistsAsync(roleName))
-            await roleManager.CreateAsync(new IdentityRole(roleName));
+        var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+        string[] roleNames = { "Admin", "Student", "Faculty", "Finance" };
+        foreach (var roleName in roleNames)
+        {
+            if (!await roleManager.RoleExistsAsync(roleName))
+                await roleManager.CreateAsync(new IdentityRole(roleName));
+        }
     }
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"Role seeding skipped: {ex.Message}");
 }
 
 if (!app.Environment.IsDevelopment())
