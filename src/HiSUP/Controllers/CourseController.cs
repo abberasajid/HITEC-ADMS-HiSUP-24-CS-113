@@ -25,8 +25,9 @@ public class CourseController : Controller
     }
 
     // GET: /Course/Create
-    public IActionResult Create()
+    public async Task<IActionResult> Create()
     {
+        ViewBag.Programs = await _context.Programs.ToListAsync();
         return View();
     }
 
@@ -47,6 +48,7 @@ public class CourseController : Controller
         catch (Exception ex)
         {
             TempData["Error"] = "Error: " + ex.Message;
+            ViewBag.Programs = await _context.Programs.ToListAsync();
             return View(course);
         }
     }

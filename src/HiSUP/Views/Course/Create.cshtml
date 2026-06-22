@@ -59,9 +59,15 @@
                         </div>
                         <div class="col-md-4">
                             <label class="form-label fw-bold">
-                                <i class="fas fa-project-diagram me-1 text-primary"></i>Program ID
+                                <i class="fas fa-project-diagram me-1 text-primary"></i>Program
                             </label>
-                            <input asp-for="ProgramID" type="number" class="form-control" placeholder="e.g. 1" required />
+                            <select asp-for="ProgramID" class="form-control" required>
+                                <option value="">-- Select Program --</option>
+                                @foreach (var p in ViewBag.Programs)
+                                {
+                                    <option value="@p.ProgramID">@p.ProgramName</option>
+                                }
+                            </select>
                         </div>
                         <div class="col-12 mt-4">
                             <button type="submit" class="btn btn-primary btn-lg px-5">
