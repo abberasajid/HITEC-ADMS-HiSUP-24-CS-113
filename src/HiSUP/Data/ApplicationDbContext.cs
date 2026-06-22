@@ -13,7 +13,7 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<Department> Departments { get; set; }
     public DbSet<Faculty> Faculty { get; set; }
     public DbSet<Course> Courses { get; set; }
-    public DbSet<Program> Programs { get; set; }
+    public DbSet<AcademicProgram> Programs { get; set; }
     public DbSet<Section> Sections { get; set; }
     public DbSet<Enrollment> Enrollments { get; set; }
     public DbSet<Grade> Grades { get; set; }
