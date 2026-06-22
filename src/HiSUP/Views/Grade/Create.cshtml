@@ -1,0 +1,83 @@
+@model HiSUP.Models.Grade
+@{
+    ViewData["Title"] = "Add Grade";
+}
+
+<div class="page-header">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h2><i class="fas fa-star me-2"></i>Add Grade</h2>
+            <p>Assign grade to a student</p>
+        </div>
+        <a href="/Grade" class="btn btn-light">
+            <i class="fas fa-arrow-left me-2"></i>Back to Grades
+        </a>
+    </div>
+</div>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fas fa-exclamation-circle me-2"></i>@TempData["Error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="table-card">
+            <div class="card-header">
+                <i class="fas fa-plus-circle me-2"></i>Grade Form
+            </div>
+            <div class="p-4">
+                <form asp-action="Create" method="post">
+                    @Html.AntiForgeryToken()
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <label class="form-label fw-bold">Student & Course</label>
+                            <select asp-for="EnrollmentID" class="form-control" required>
+                                <option value="">-- Select Student & Course --</option>
+                                @foreach (var e in ViewBag.Enrollments)
+                                {
+                                    <option value="@e.EnrollmentID">
+                                        @e.Student.FirstName @e.Student.LastName — @e.Section.Course.CourseTitle
+                                    </option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Marks Obtained</label>
+                            <input asp-for="MarksObtained" type="number" step="0.01" class="form-control" placeholder="e.g. 85" required />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Letter Grade</label>
+                            <select asp-for="LetterGrade" class="form-control" required>
+                                <option value="">-- Select Grade --</option>
+                                <option value="A+">A+</option>
+                                <option value="A">A</option>
+                                <option value="B+">B+</option>
+                                <option value="B">B</option>
+                                <option value="C+">C+</option>
+                                <option value="C">C</option>
+                                <option value="D">D</option>
+                                <option value="F">F</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Grade Point</label>
+                            <input asp-for="GradePoint" type="number" step="0.01" class="form-control" placeholder="e.g. 3.67" required />
+                        </div>
+                        <div class="col-12 mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg px-5">
+                                <i class="fas fa-save me-2"></i>Save Grade
+                            </button>
+                            <a href="/Grade" class="btn btn-outline-secondary btn-lg ms-2 px-5">
+                                <i class="fas fa-times me-2"></i>Cancel
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
