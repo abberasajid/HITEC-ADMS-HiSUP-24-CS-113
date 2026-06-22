@@ -39,6 +39,20 @@ public class StudentController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(Student student)
     {
+        ModelState.Remove("Department");
+        ModelState.Remove("Enrollments");
+        ModelState.Remove("Grades");
+        ModelState.Remove("Attendances");
+        ModelState.Remove("FeePayments");
+        ModelState.Remove("LibraryIssues");
+
+        if (!ModelState.IsValid)
+        {
+            ViewBag.Departments = await _context.Departments.ToListAsync();
+            TempData["Error"] = "Please fill all required fields.";
+            return View(student);
+        }
+
         try
         {
             var connStr = _config.GetConnectionString("HiSUP_DB");
