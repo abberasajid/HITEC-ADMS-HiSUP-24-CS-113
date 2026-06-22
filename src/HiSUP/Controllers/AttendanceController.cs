@@ -44,7 +44,7 @@ public class AttendanceController : Controller
     // POST: /Attendance/Mark
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Mark(int studentId, int sectionId, DateTime attendanceDate, string status, int markedBy)
+    public async Task<IActionResult> Mark(int studentId, int sectionId, DateTime attendanceDate, string status, int? markedBy)
     {
         try
         {
@@ -58,13 +58,8 @@ public class AttendanceController : Controller
             cmd.Parameters.AddWithValue("@SectionID", sectionId);
             cmd.Parameters.AddWithValue("@AttendanceDate", attendanceDate);
             cmd.Parameters.AddWithValue("@Status", status);
-            cmd.Parameters.AddWithValue("@MarkedBy", markedBy);
+            cmd.Parameters.AddWithValue("@MarkedBy", (object?)markedBy ?? DBNull.Value);
 
-            var outputParam = new SqlParameter("@NewAttendanceID", System.Data.SqlDbType.Int)
-            {
-                Direction = System.Data.ParameterDirection.Output
-            };
-            cmd.Parameters.Add(outputParam);
             await cmd.ExecuteNonQueryAsync();
 
             TempData["Success"] = "Attendance marked successfully!";
