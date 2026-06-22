@@ -1,9 +1,8 @@
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HiSUP.Models;
 
-public class Program
+public class AcademicProgram
 {
     [Key]
     public int ProgramID { get; set; }
