@@ -65,6 +65,10 @@ public class StudentController : Controller
             cmd.Parameters.AddWithValue("@LastName", student.LastName);
             cmd.Parameters.AddWithValue("@Email", student.Email);
             cmd.Parameters.AddWithValue("@DeptID", student.DepartmentID);
+            cmd.Parameters.AddWithValue("@RollNumber", student.RollNumber ?? "");
+            cmd.Parameters.AddWithValue("@EnrollmentYear", student.EnrollmentYear);
+            cmd.Parameters.AddWithValue("@Phone", student.Phone ?? "");
+            cmd.Parameters.AddWithValue("@Gender", student.Gender ?? "");
 
             var outputParam = new SqlParameter("@NewStudentID", System.Data.SqlDbType.Int)
             {
